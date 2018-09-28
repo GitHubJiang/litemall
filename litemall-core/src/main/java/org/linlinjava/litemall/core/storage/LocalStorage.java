@@ -30,7 +30,7 @@ public class LocalStorage implements Storage {
     public void setStoragePath(String storagePath) {
         this.storagePath = storagePath;
 
-        this.rootLocation = Paths.get(storagePath);
+        this.rootLocation = Paths.get("D:/",storagePath);
         try {
             Files.createDirectories(rootLocation);
         } catch (IOException e) {
