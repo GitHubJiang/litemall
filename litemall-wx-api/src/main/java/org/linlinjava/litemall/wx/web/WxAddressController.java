@@ -49,7 +49,7 @@ public class WxAddressController {
             return ResponseUtil.unlogin();
         }
         List<LitemallAddress> addressList = addressService.queryByUid(userId);
-        List<Map<String, Object>> addressVoList = new ArrayList<>(addressList.size());
+       /* List<Map<String, Object>> addressVoList = new ArrayList<>(addressList.size());
         for(LitemallAddress address : addressList){
             Map<String, Object> addressVo = new HashMap<>();
             addressVo.put("id", address.getId());
@@ -64,8 +64,8 @@ public class WxAddressController {
             addressVo.put("detailedAddress", detailedAddress);
 
             addressVoList.add(addressVo);
-        }
-        return ResponseUtil.ok(addressVoList);
+        }*/
+        return ResponseUtil.ok(addressList);
     }
 
     /**
@@ -106,7 +106,7 @@ public class WxAddressController {
             return ResponseUtil.badArgumentValue();
         }
 
-        Map<Object, Object> data = new HashMap<Object, Object>();
+/*        Map<Object, Object> data = new HashMap<Object, Object>();
         data.put("id", address.getId());
         data.put("name", address.getName());
         data.put("provinceId", address.getProvinceId());
@@ -120,8 +120,8 @@ public class WxAddressController {
         String cname = regionService.findById(address.getCityId()).getName();
         data.put("cityName", cname);
         String dname = regionService.findById(address.getAreaId()).getName();
-        data.put("areaName", dname);
-        return ResponseUtil.ok(data);
+        data.put("areaName", dname);*/
+        return ResponseUtil.ok(address);
     }
 
     /**
@@ -162,7 +162,7 @@ public class WxAddressController {
             address.setUserId(userId);
             addressService.update(address);
         }
-        return ResponseUtil.ok(address.getId());
+        return ResponseUtil.ok(address);
     }
 
     /**
