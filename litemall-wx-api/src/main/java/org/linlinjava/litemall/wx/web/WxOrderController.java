@@ -1,5 +1,6 @@
 package org.linlinjava.litemall.wx.web;
 
+import com.alibaba.fastjson.JSON;
 import com.github.binarywang.wxpay.bean.notify.WxPayNotifyResponse;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.github.binarywang.wxpay.bean.order.WxPayMpOrderResult;
@@ -107,9 +108,9 @@ public class WxOrderController {
         Integer provinceId = litemallAddress.getProvinceId();
         Integer cityId = litemallAddress.getCityId();
         Integer areaId = litemallAddress.getAreaId();
-        String provinceName = regionService.findById(provinceId).getName();
-        String cityName = regionService.findById(cityId).getName();
-        String areaName = regionService.findById(areaId).getName();
+        String provinceName = litemallAddress.getProvince();//regionService.findById(provinceId).getName();
+        String cityName = litemallAddress.getCity();// regionService.findById(cityId).getName();
+        String areaName = litemallAddress.getArea();//regionService.findById(areaId).getName();
         String fullRegion = provinceName + " " + cityName + " " + areaName;
         return fullRegion + " " + litemallAddress.getAddress();
     }
@@ -307,7 +308,7 @@ public class WxOrderController {
             }
         }
 
-        if (cartId == null || addressId == null || couponId == null) {
+        if (cartId == null || addressId == null) {
             return ResponseUtil.badArgument();
         }
 
@@ -320,7 +321,7 @@ public class WxOrderController {
 
         // 团购优惠
         BigDecimal grouponPrice = new BigDecimal(0.00);
-        LitemallGrouponRules grouponRules = grouponRulesService.queryById(grouponRulesId);
+        LitemallGrouponRules grouponRules = null;//grouponRulesService.queryById(grouponRulesId);
         if (grouponRules != null) {
             grouponPrice = grouponRules.getDiscount();
         }
@@ -623,10 +624,11 @@ public class WxOrderController {
      */
     @PostMapping("pay-notify")
     public Object payNotify(HttpServletRequest request, HttpServletResponse response) {
+    	logger.info("微信回调开始 ");
         try {
             String xmlResult = IOUtils.toString(request.getInputStream(), request.getCharacterEncoding());
             WxPayOrderNotifyResult result = wxPayService.parseOrderNotifyResult(xmlResult);
-
+            logger.info("微信回调结果: "+JSON.toJSONString(result));
             String orderSn = result.getOutTradeNo();
             String payId = result.getTransactionId();
 

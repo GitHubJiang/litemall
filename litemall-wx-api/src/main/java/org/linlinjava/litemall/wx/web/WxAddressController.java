@@ -49,7 +49,7 @@ public class WxAddressController {
             return ResponseUtil.unlogin();
         }
         List<LitemallAddress> addressList = addressService.queryByUid(userId);
-       /* List<Map<String, Object>> addressVoList = new ArrayList<>(addressList.size());
+        /*List<Map<String, Object>> addressVoList = new ArrayList<>(addressList.size());
         for(LitemallAddress address : addressList){
             Map<String, Object> addressVo = new HashMap<>();
             addressVo.put("id", address.getId());
@@ -106,7 +106,7 @@ public class WxAddressController {
             return ResponseUtil.badArgumentValue();
         }
 
-/*        Map<Object, Object> data = new HashMap<Object, Object>();
+       /* Map<Object, Object> data = new HashMap<Object, Object>();
         data.put("id", address.getId());
         data.put("name", address.getName());
         data.put("provinceId", address.getProvinceId());
